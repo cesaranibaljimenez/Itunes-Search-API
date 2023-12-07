@@ -11,4 +11,7 @@
 
   1. Agregar estilos y diseños bootstrap.
   2. Permitir a los usuarios flitrar por diferentes categorías (música, películas, podcast, etc.).
+
+## Información de la licencia
+Este Proyecto esta bajo licencia MIT. Consulta el archivo [LICENSE](./LICENSE) para más detalle.
      
