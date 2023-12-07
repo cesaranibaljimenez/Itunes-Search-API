@@ -95,9 +95,9 @@ const useDataApi = (initialUrl, initialData) => {
         {isLoading ? (
             <div>Loading ...</div>
         ) : (
-            <ul>
+            <ul className="list-group">
             {data.results.map((item) => (
-                <li key={item.trackId}>
+                <li key={item.trackId} className="list-group-item">
                 <a href={item.trackViewUrl}>{item.trackName}</a>
                 </li>
             ))}
