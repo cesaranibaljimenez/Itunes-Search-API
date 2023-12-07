@@ -68,22 +68,26 @@ const useDataApi = (initialUrl, initialData) => {
 
     return (
 
-    <div>
+    <div className="container mt-5">
+      <h1 claseName="text-center mb-4">iTunes Search</h1>
 
         <form 
+          className="mb-4"
              onSubmit={(event) => {
                 doFetch(`https://itunes.apple.com/search?term=${query}&entity=song`);
                 event.preventDefault();
             }}
             >
-
+              <div className="imput-group">
             <input
             type="text"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
             />
-            <button type="submit">Search</button>
-
+            <div className="input-group-append">
+            <button type="submit" className="btn btn-primary">Search</button>
+            </div>
+            </div>
         </form>
 
         {isError && <div>Something went wrong ...</div>}
