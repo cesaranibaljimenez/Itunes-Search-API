@@ -60,10 +60,27 @@ const useDataApi = (initialUrl, initialData) => {
   };
 
   function App() {
+   
+    const [currentPage, setCurrentPage] = useState(1);
     const [query, setQuery] = useState("jack johnson");
     const [{ data, isLoading, isError}, doFetch] = useDataApi(`https://itunes.apple.com/search?term=${query}&entity=song`,
     {results: []}
 
+    );
+    
+
+    //calculamos el número total de páginas 
+    const itemsPerPage = 10; // Número de resultados por página
+    const totalResults = data.results.length;
+    const totalPages = Math.ceil(totalResults / itemsPerPage);
+
+    const handlePageChange = (page) => {
+      setCurrentPage(page);
+    };
+
+    const slicedData = data.results.slice(
+      (currentPage - 1) * itemsPerPage,
+      currentPage * itemsPerPage
     );
 
     return (
@@ -72,17 +89,18 @@ const useDataApi = (initialUrl, initialData) => {
       <h1 claseName="text-center mb-4">iTunes Search</h1>
 
         <form 
-          className="mb-4"
              onSubmit={(event) => {
                 doFetch(`https://itunes.apple.com/search?term=${query}&entity=song`);
                 event.preventDefault();
             }}
             >
-              <div className="imput-group">
+              <div className="input-group mb-3">
             <input
             type="text"
             value={query}
             onChange={(event) => setQuery(event.target.value)}
+            className="form-control"
+            placeholder="Search for songs..."
             />
             <div className="input-group-append">
             <button type="submit" className="btn btn-primary">Search</button>
@@ -95,21 +113,41 @@ const useDataApi = (initialUrl, initialData) => {
         {isLoading ? (
             <div>Loading ...</div>
         ) : (
+          <>
             <ul className="list-group">
-            {data.results.map((item) => (
+            {slicedData.map((item) => (
                 <li key={item.trackId} className="list-group-item">
                 <a href={item.trackViewUrl}>{item.trackName}</a>
                 </li>
             ))}
             </ul>
+
+              <nav arial-label="Page navigtion">
+                <ul className="pagination mt-3">
+                  <li className={`page-item ${currentPage === 1 ? 'disabled' : ''}`}>
+                    <button className="page-link" onClick={() => handlePageChange(currentPage - 1)}>
+                      Previous
+                    </button>
+                  </li>
+                  {/* Generar dinámicamente los elementos de la paginación */}
+                  {Array.from({length: totalPages}, (_, index) => (
+                    <li key={index + 1} className={`page-item ${currentPage === index + 1 ? 'active' : ''}`}>
+                      <button className="page-link" onClick={() => handlePageChange(index + 1)}>
+                        {index+1}
+                      </button>
+                    </li>
+                  ))}
+                  <li className={`page-item ${currentPage === totalPages ? 'disabled' : ''}`}>
+                  <button className="page-link"onClick={() => handlePageChange(currentPage+1)}>
+                    Next
+                    </button>
+                  </li>
+                </ul>
+              </nav>
+           </>
         )}
-
-    </div>
-
+   </div> 
     );
-
-  }
-
-  // ========================================
+   }
 
   ReactDOM.render(<App />, document.getElementById("root"));
