@@ -1,5 +1,5 @@
 # Itunes-Search-API
-![ItunesAPI](https://github.com/cesaranibaljimenez/Itunes-Search-API/blob/main/ItunesAPI.jpg)
+![ItunesAPI](https://github.com/cesaranibaljimenez/Itunes-Search-API/blob/main/ItunesAPI.png)
 ## La app aprovecha la API de búsqueda de Itunes buscar y mostrar información sobre canciones según la entrada del usuario.
 
 ## ¿Cómo ejecutarlo?
